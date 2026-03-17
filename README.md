@@ -237,4 +237,4 @@ npm run lint      # ESLint
 | **Phase 2** | Oeffentliche Seiten — SEO, News, CMS-Inhalte | Abgeschlossen |
 | **Phase 3** | Therapeuten-Verzeichnis — Mapbox, Suche, Profile | Abgeschlossen |
 | **Phase 4** | Mitglieder-Bereich — Dashboard, Self-Service, Events | Abgeschlossen |
-| **Phase 5** | Admin & Polish — Verwaltung, E-Mails, Tests | In Arbeit |
+| **Phase 5** | Admin & Polish — Verwaltung, E-Mails, Tests | Abgeschlossen |
