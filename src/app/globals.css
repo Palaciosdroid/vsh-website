@@ -28,38 +28,80 @@
 
   /* VSH brand colors */
   --color-vsh-blue: #1B4F72;
+  --color-vsh-blue-light: #2471A3;
+  --color-vsh-blue-dark: #154360;
   --color-vsh-gold: #B9965A;
+  --color-vsh-gold-light: #D4AF6E;
   --color-vsh-green: #27AE60;
+  --color-vsh-green-light: #2ECC71;
   --color-vsh-bg: #FAFBFC;
-  --color-vsh-text: #2C3E50;
+  --color-vsh-text: #1a1a2e;
+  --color-vsh-warm: #faf8f5;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-fade-in: fade-in 0.6s ease-out both;
+  --animate-fade-in-up: fade-in-up 0.6s ease-out both;
+  --animate-slide-in-right: slide-in-right 0.5s ease-out both;
+  --animate-count-up: count-up 1s ease-out both;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-soft: pulse-soft 3s ease-in-out infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 :root {
-  --radius: 0.5rem;
-  /* VSH Design: Professionell, vertrauensvoll, ruhig */
-  --background: #FAFBFC;
-  --foreground: #2C3E50;
+  --radius: 0.625rem;
+  /* Modern, clean, professional */
+  --background: #fafbfc;
+  --foreground: #1a1a2e;
   --card: #ffffff;
-  --card-foreground: #2C3E50;
+  --card-foreground: #1a1a2e;
   --popover: #ffffff;
-  --popover-foreground: #2C3E50;
+  --popover-foreground: #1a1a2e;
   --primary: #1B4F72;
   --primary-foreground: #ffffff;
   --secondary: #f0ebe3;
   --secondary-foreground: #1B4F72;
-  --muted: #f1f3f5;
-  --muted-foreground: #6c7a89;
+  --muted: #f4f6f8;
+  --muted-foreground: #64748b;
   --accent: #27AE60;
   --accent-foreground: #ffffff;
-  --destructive: #e74c3c;
+  --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #e2e6ea;
-  --input: #e2e6ea;
+  --border: #e8ecf0;
+  --input: #e8ecf0;
   --ring: #1B4F72;
 }
 
@@ -70,5 +112,83 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans), 'Inter', 'DM Sans', Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Modern glass effect utility */
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #1B4F72 0%, #2471A3 50%, #27AE60 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hero gradient */
+.hero-gradient {
+  background: linear-gradient(135deg, #154360 0%, #1B4F72 40%, #2471A3 100%);
+}
+
+/* Subtle section backgrounds */
+.section-warm {
+  background: linear-gradient(180deg, #faf8f5 0%, #ffffff 100%);
+}
+
+.section-cool {
+  background: linear-gradient(180deg, #f4f6f8 0%, #ffffff 100%);
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px -8px rgba(27, 79, 114, 0.15);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Stagger animation delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+.stagger-7 { animation-delay: 0.7s; }
+.stagger-8 { animation-delay: 0.8s; }
+
+/* Prose-like content styling */
+.prose-vsh h2 {
+  @apply text-xl font-semibold text-foreground mt-10 mb-4;
+}
+.prose-vsh h3 {
+  @apply text-lg font-semibold text-foreground mt-8 mb-3;
+}
+.prose-vsh p {
+  @apply text-muted-foreground leading-relaxed mb-4;
+}
+.prose-vsh ul {
+  @apply list-disc pl-6 space-y-2 text-muted-foreground mb-4;
+}
+.prose-vsh ol {
+  @apply list-decimal pl-6 space-y-2 text-muted-foreground mb-4;
+}
+.prose-vsh a {
+  @apply text-vsh-blue hover:text-vsh-blue-light underline underline-offset-2;
 }
