@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
-export default function ContactPage() {
+export default function KontaktPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -21,10 +21,9 @@ export default function ContactPage() {
     const supabase = createClient();
 
     const { error: insertError } = await supabase.from("contact_requests").insert({
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      phone: (formData.get("phone") as string) || null,
-      subject: (formData.get("subject") as string) || null,
+      sender_name: formData.get("name") as string,
+      sender_email: formData.get("email") as string,
+      sender_phone: (formData.get("phone") as string) || null,
       message: formData.get("message") as string,
     });
 
@@ -41,7 +40,7 @@ export default function ContactPage() {
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <Card className="mx-auto max-w-lg">
           <CardContent className="py-10 text-center">
-            <h2 className="text-2xl font-bold">Vielen Dank!</h2>
+            <h2 className="text-2xl font-bold text-vsh-text">Vielen Dank!</h2>
             <p className="mt-2 text-muted-foreground">
               Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns in Kürze bei Ihnen.
             </p>
@@ -58,7 +57,7 @@ export default function ContactPage() {
           <CardHeader>
             <CardTitle className="text-2xl">Kontakt</CardTitle>
             <CardDescription>
-              Haben Sie Fragen oder Anregungen? Schreiben Sie uns.
+              Haben Sie Fragen zum Verband oder zur Hypnosetherapie? Schreiben Sie uns.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -74,10 +73,6 @@ export default function ContactPage() {
               <div className="space-y-2">
                 <Label htmlFor="phone">Telefon</Label>
                 <Input id="phone" name="phone" type="tel" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="subject">Betreff</Label>
-                <Input id="subject" name="subject" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="message">Nachricht *</Label>

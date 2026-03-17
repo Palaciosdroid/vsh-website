@@ -7,11 +7,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "VSH — Vereinigung Schweizer Tierärzte",
+    default: "VSH — Verband Schweizer Hypnosetherapeuten",
     template: "%s | VSH",
   },
   description:
-    "Offizielle Website der Vereinigung Schweizer Tierärzte (VSH). Ihr Berufsverband für veterinärmedizinische Exzellenz in der Schweiz.",
+    "Finden Sie qualifizierte Hypnosetherapeuten in der Schweiz. Der Verband Schweizer Hypnosetherapeuten (VSH) — Ihr Verzeichnis für professionelle Hypnosetherapie.",
 };
 
 export default function RootLayout({

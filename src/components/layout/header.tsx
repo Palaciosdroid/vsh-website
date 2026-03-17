@@ -6,27 +6,25 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navigation = [
-  { name: "Startseite", href: "/" },
-  { name: "Aktuelles", href: "/news" },
-  { name: "Veranstaltungen", href: "/events" },
-  { name: "Mitglieder", href: "/members" },
-  { name: "Weiterbildung", href: "/continuing-education" },
-  { name: "Dokumente", href: "/documents" },
-  { name: "Über uns", href: "/about" },
-  { name: "Kontakt", href: "/contact" },
+  { name: "Über uns", href: "/ueber-uns" },
+  { name: "Therapeuten finden", href: "/therapeuten" },
+  { name: "Hypnosetherapie", href: "/hypnosetherapie" },
+  { name: "News", href: "/news" },
+  { name: "FAQ", href: "/faq" },
+  { name: "Kontakt", href: "/kontakt" },
 ];
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold tracking-tight">VSH</span>
+          <span className="text-xl font-bold tracking-tight text-vsh-blue">VSH</span>
           <span className="hidden text-sm text-muted-foreground sm:inline">
-            Vereinigung Schweizer Tierärzte
+            Verband Schweizer Hypnosetherapeuten
           </span>
         </Link>
 
@@ -36,7 +34,7 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+              className="rounded-md px-3 py-2 text-sm font-medium text-vsh-text transition-colors hover:bg-muted hover:text-vsh-blue"
             >
               {item.name}
             </Link>
@@ -45,18 +43,18 @@ export function Header() {
 
         {/* Auth Buttons (Desktop) */}
         <div className="hidden items-center gap-2 lg:flex">
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="outline" size="sm" asChild>
             <Link href="/auth/login">Anmelden</Link>
           </Button>
-          <Button size="sm" asChild>
-            <Link href="/dashboard">Dashboard</Link>
+          <Button size="sm" className="bg-vsh-green hover:bg-vsh-green/90" asChild>
+            <Link href="/mitglied-werden">Mitglied werden</Link>
           </Button>
         </div>
 
         {/* Mobile Menu Button */}
         <button
           type="button"
-          className="lg:hidden rounded-md p-2 text-muted-foreground hover:bg-accent"
+          className="rounded-md p-2 text-muted-foreground hover:bg-muted lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Menü öffnen"
         >
@@ -72,18 +70,18 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="block rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                className="block rounded-md px-3 py-2 text-sm font-medium text-vsh-text hover:bg-muted hover:text-vsh-blue"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
-            <div className="border-t pt-3 flex flex-col gap-2">
-              <Button variant="ghost" size="sm" asChild>
+            <div className="flex flex-col gap-2 border-t pt-3">
+              <Button variant="outline" size="sm" asChild>
                 <Link href="/auth/login">Anmelden</Link>
               </Button>
-              <Button size="sm" asChild>
-                <Link href="/dashboard">Dashboard</Link>
+              <Button size="sm" className="bg-vsh-green hover:bg-vsh-green/90" asChild>
+                <Link href="/mitglied-werden">Mitglied werden</Link>
               </Button>
             </div>
           </nav>

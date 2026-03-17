@@ -2,46 +2,46 @@ import Link from "next/link";
 
 const footerLinks = {
   verband: [
-    { name: "Über uns", href: "/about" },
-    { name: "Vorstand", href: "/about#vorstand" },
-    { name: "Statuten", href: "/documents" },
-    { name: "Kontakt", href: "/contact" },
+    { name: "Über uns", href: "/ueber-uns" },
+    { name: "Statuten", href: "/statuten" },
+    { name: "Mitglied werden", href: "/mitglied-werden" },
+    { name: "Kontakt", href: "/kontakt" },
   ],
-  mitglieder: [
-    { name: "Mitgliederverzeichnis", href: "/members" },
-    { name: "Weiterbildung", href: "/continuing-education" },
-    { name: "Dokumente", href: "/documents" },
-    { name: "Veranstaltungen", href: "/events" },
+  angebot: [
+    { name: "Therapeuten finden", href: "/therapeuten" },
+    { name: "Was ist Hypnosetherapie?", href: "/hypnosetherapie" },
+    { name: "FAQ", href: "/faq" },
+    { name: "News", href: "/news" },
   ],
   rechtliches: [
-    { name: "Impressum", href: "/impressum" },
     { name: "Datenschutz", href: "/datenschutz" },
+    { name: "Impressum", href: "/impressum" },
   ],
 };
 
 export function Footer() {
   return (
-    <footer className="border-t bg-muted/40">
+    <footer className="border-t bg-white">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <h3 className="text-lg font-bold">VSH</h3>
+            <h3 className="text-lg font-bold text-vsh-blue">VSH</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Vereinigung Schweizer Tierärzte — Ihr Berufsverband für
-              veterinärmedizinische Exzellenz.
+              Verband Schweizer Hypnosetherapeuten — Ihr Berufsverband
+              für qualifizierte Hypnosetherapie in der Schweiz.
             </p>
           </div>
 
           {/* Verband */}
           <div>
-            <h4 className="text-sm font-semibold">Verband</h4>
+            <h4 className="text-sm font-semibold text-vsh-text">Verband</h4>
             <ul className="mt-3 space-y-2">
               {footerLinks.verband.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground"
+                    className="text-sm text-muted-foreground hover:text-vsh-blue"
                   >
                     {link.name}
                   </Link>
@@ -50,15 +50,15 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Mitglieder */}
+          {/* Angebot */}
           <div>
-            <h4 className="text-sm font-semibold">Mitglieder</h4>
+            <h4 className="text-sm font-semibold text-vsh-text">Angebot</h4>
             <ul className="mt-3 space-y-2">
-              {footerLinks.mitglieder.map((link) => (
+              {footerLinks.angebot.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground"
+                    className="text-sm text-muted-foreground hover:text-vsh-blue"
                   >
                     {link.name}
                   </Link>
@@ -69,13 +69,13 @@ export function Footer() {
 
           {/* Rechtliches */}
           <div>
-            <h4 className="text-sm font-semibold">Rechtliches</h4>
+            <h4 className="text-sm font-semibold text-vsh-text">Rechtliches</h4>
             <ul className="mt-3 space-y-2">
               {footerLinks.rechtliches.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground"
+                    className="text-sm text-muted-foreground hover:text-vsh-blue"
                   >
                     {link.name}
                   </Link>
@@ -86,7 +86,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} VSH — Vereinigung Schweizer Tierärzte.
+          &copy; {new Date().getFullYear()} VSH — Verband Schweizer Hypnosetherapeuten.
           Alle Rechte vorbehalten.
         </div>
       </div>

@@ -1,13 +1,14 @@
-# VSH Website
+# VSH — Verband Schweizer Hypnosetherapeuten
 
-Offizielle Website der **Vereinigung Schweizer Tierärzte (VSH)**.
+Offizielle Website des **Verbands Schweizer Hypnosetherapeuten (VSH)** — [v-s-h.ch](https://v-s-h.ch)
 
 ## Tech Stack
 
 - **Framework:** Next.js 16 (App Router, TypeScript)
 - **Styling:** Tailwind CSS v4 + shadcn/ui
 - **Backend:** Supabase (Auth, Database, Storage)
-- **Database:** PostgreSQL + PostGIS
+- **Database:** PostgreSQL + PostGIS (Umkreissuche)
+- **Karten:** Mapbox GL JS (Phase 3)
 - **Deployment:** Railway (Git-Push Auto-Deploy)
 
 ## Getting Started
@@ -26,7 +27,7 @@ Offizielle Website der **Vereinigung Schweizer Tierärzte (VSH)**.
 
 ## Database
 
-Migration files are in `supabase/migrations/`. Apply them via the Supabase Dashboard or CLI:
+Migration files are in `supabase/migrations/`. Apply via Supabase CLI:
 
 ```bash
 supabase db push
@@ -34,34 +35,50 @@ supabase db push
 
 ### Tables
 
-- `profiles` — User profiles (extends auth.users)
-- `specializations` — Veterinary specializations
-- `profile_specializations` — Many-to-many link
-- `news` — News articles
-- `pages` — CMS static pages
-- `documents` — Downloadable files
-- `contact_requests` — Contact form submissions
-- `events` — Events / Veranstaltungen
-- `event_registrations` — Event registrations
-- `continuing_education` — Continuing education courses
+| Tabelle | Beschreibung |
+|---------|-------------|
+| `profiles` | Therapeuten-Profile (extends auth.users) |
+| `specializations` | Spezialisierungen-Katalog |
+| `contact_requests` | Kontaktanfragen an Therapeuten |
+| `news` | Blog/News-Beiträge |
+| `pages` | CMS-Seiten (Über uns, FAQ etc.) |
+| `documents` | Verbandsdokumente |
+| `events` | Verbandstermine |
+| `event_registrations` | Event-Anmeldungen |
+| `continuing_education` | Weiterbildungs-Katalog |
+
+## Phasenplan
+
+- **Phase 1:** Fundament (Setup, Auth, Layout, DB) ✅
+- **Phase 2:** Öffentliche Seiten (SEO, News, CMS)
+- **Phase 3:** Therapeuten-Verzeichnis (Mapbox, Suche, Profile)
+- **Phase 4:** Mitglieder-Bereich (Dashboard, Self-Service)
+- **Phase 5:** Admin & Polish (Verwaltung, E-Mails, Tests)
 
 ## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── (public)/       # Public pages (news, events, members, etc.)
-│   ├── admin/          # Admin area (protected)
-│   ├── auth/           # Auth pages (login, callback, confirm)
-│   ├── dashboard/      # Member dashboard (protected)
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
+│   ├── admin/              # Admin-Bereich (protected)
+│   ├── auth/               # Auth (Login, Callback, Confirm)
+│   ├── dashboard/          # Mitglieder-Dashboard (protected)
+│   ├── therapeuten/        # Therapeuten-Verzeichnis + Profile
+│   ├── news/               # News-Übersicht + Detail
+│   ├── ueber-uns/          # Über den Verband
+│   ├── kontakt/            # Kontaktformular
+│   ├── faq/                # Häufige Fragen
+│   ├── hypnosetherapie/    # Info-Seite (SEO)
+│   ├── mitglied-werden/    # Mitgliedschaft
+│   ├── statuten/           # Verbandsstatuten
+│   ├── datenschutz/        # Datenschutzerklärung
+│   ├── impressum/          # Impressum
+│   └── ...
 ├── components/
-│   ├── layout/         # Header, Footer
-│   └── ui/             # shadcn/ui components
+│   ├── layout/             # Header, Footer
+│   └── ui/                 # shadcn/ui Komponenten
 ├── lib/
-│   ├── supabase/       # Supabase client (browser, server, middleware)
-│   └── utils.ts        # cn() utility
-└── middleware.ts        # Auth protection for /dashboard, /admin
+│   ├── supabase/           # Supabase Client (Browser, Server, Middleware)
+│   └── utils.ts            # cn() Utility
+└── middleware.ts            # Auth-Schutz für /dashboard, /admin
 ```
