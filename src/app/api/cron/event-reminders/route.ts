@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { sendEmail } from "@/lib/email";
+import { eventReminderEmail } from "@/lib/email-templates";
 
 // Railway cron job endpoint: sends event reminder emails
 // Schedule: daily at 08:00 CET
@@ -19,9 +21,11 @@ export async function GET(request: NextRequest) {
   const in8Days = new Date(now.getTime() + 8 * 24 * 60 * 60 * 1000);
   const in2Days = new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000);
 
-  const reminders: { type: string; eventTitle: string; email: string; firstName: string; startDate: string }[] = [];
+  let sent = 0;
+  let failed = 0;
+  const details: { type: string; event: string; email: string; success: boolean }[] = [];
 
-  // 7-day reminders
+  // 7-Tage-Erinnerungen
   const { data: events7d } = await supabase
     .from("events")
     .select("id, title, start_date")
@@ -46,25 +50,43 @@ export async function GET(request: NextRequest) {
 
       for (const profile of profiles ?? []) {
         if (profile.notification_event_reminder !== false && profile.email) {
-          reminders.push({
+          const html = eventReminderEmail(
+            profile.first_name ?? "",
+            event.title,
+            event.start_date,
+            7
+          );
+
+          const success = await sendEmail({
+            to: profile.email,
+            subject: `Erinnerung: ${event.title} in 7 Tagen`,
+            html,
+          });
+
+          if (success) {
+            sent++;
+          } else {
+            failed++;
+          }
+
+          details.push({
             type: "7d",
-            eventTitle: event.title,
+            event: event.title,
             email: profile.email,
-            firstName: profile.first_name ?? "",
-            startDate: event.start_date,
+            success,
           });
         }
       }
     }
 
-    // Mark as sent
+    // Als gesendet markieren
     await supabase
       .from("events")
       .update({ reminder_sent_7d: true })
       .eq("id", event.id);
   }
 
-  // 1-day reminders
+  // 1-Tag-Erinnerungen
   const { data: events1d } = await supabase
     .from("events")
     .select("id, title, start_date")
@@ -89,36 +111,51 @@ export async function GET(request: NextRequest) {
 
       for (const profile of profiles ?? []) {
         if (profile.notification_event_reminder !== false && profile.email) {
-          reminders.push({
+          const html = eventReminderEmail(
+            profile.first_name ?? "",
+            event.title,
+            event.start_date,
+            1
+          );
+
+          const success = await sendEmail({
+            to: profile.email,
+            subject: `Erinnerung: ${event.title} ist morgen`,
+            html,
+          });
+
+          if (success) {
+            sent++;
+          } else {
+            failed++;
+          }
+
+          details.push({
             type: "1d",
-            eventTitle: event.title,
+            event: event.title,
             email: profile.email,
-            firstName: profile.first_name ?? "",
-            startDate: event.start_date,
+            success,
           });
         }
       }
     }
 
-    // Mark as sent
+    // Als gesendet markieren
     await supabase
       .from("events")
       .update({ reminder_sent_1d: true })
       .eq("id", event.id);
   }
 
-  // Send emails via SMTP if configured
-  const smtpHost = process.env.SMTP_HOST;
-  if (smtpHost && reminders.length > 0) {
-    // In production, use nodemailer or similar
-    // For now, log the reminders that would be sent
-    console.log(`[CRON] Would send ${reminders.length} event reminder emails:`,
-      reminders.map(r => `${r.type}: ${r.eventTitle} → ${r.email}`));
-  }
+  console.log(
+    `[CRON] Anlass-Erinnerungen: ${sent} gesendet, ${failed} fehlgeschlagen`
+  );
 
   return NextResponse.json({
     success: true,
-    reminders_queued: reminders.length,
-    details: reminders.map(r => ({ type: r.type, event: r.eventTitle, email: r.email })),
+    sent,
+    failed,
+    total: sent + failed,
+    details,
   });
 }
